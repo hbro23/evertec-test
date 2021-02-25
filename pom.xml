@@ -3,10 +3,14 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.dizquestudios.evertectest</groupId>
     <artifactId>evertec-test</artifactId>
-    <version>1.0</version>
+    <version>0.0.1</version>
     <packaging>pom</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <name>Evertec Test</name>
+    <modules>
+        <module>apps/debts</module>
+        <module>core/Core-Debts</module>
+    </modules>
 </project>
