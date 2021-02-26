@@ -1,9 +1,12 @@
 package com.dizquestudios.evertectest.core.debts.api;
 
+import com.dizquestudios.evertectest.core.debts.shared.API;
+
 /**
  *
  * @author Sebastian
  */
-public class Debt {
+@API
+public class DebtAPI {
     
 }
