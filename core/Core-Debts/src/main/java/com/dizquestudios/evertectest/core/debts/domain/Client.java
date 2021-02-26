@@ -1,11 +1,23 @@
 package com.dizquestudios.evertectest.core.debts.domain;
 
+import com.dizquestudios.evertectest.core.debts.shared.StringChecker;
+
 /**
  * Define the whole domain logic for clients in the debts module.
  *
  * @author Sebastian
  */
 public class Client {
+
+    public record ClientMail(String mail) {
+
+        public static final String MAIL_PATTERN = "^[A-Za-z0-9+_.-]+@(.+)$";
+
+        public ClientMail {
+            StringChecker.matchesRegexPattern(MAIL_PATTERN, mail);
+        }
+
+    }
 
     private String id;
 
