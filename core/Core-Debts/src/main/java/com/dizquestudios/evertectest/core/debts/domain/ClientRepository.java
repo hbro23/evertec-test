@@ -11,7 +11,7 @@ public interface ClientRepository {
 
     public List<Client> findAll();
     
-    public Optional<Client> getClient(String id);
+    public Optional<Client> findClient(String id);
     
     void save(Client client);
 

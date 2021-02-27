@@ -36,7 +36,6 @@ public class StringChecker extends ValueObjectChecker {
 
     public static void matchesRegexPattern(String pattern, String candidate) {
         checkRegexPattern(pattern);
-        checkEmpty(pattern);
 
         if (!Pattern.matches(pattern, candidate)) {
             throw new IllegalArgumentException(

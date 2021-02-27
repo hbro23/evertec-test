@@ -27,7 +27,7 @@ public class ClientRepositoryMemory implements ClientRepository {
     }
 
     @Override
-    public Optional<Client> getClient(String id) {
+    public Optional<Client> findClient(String id) {
         return Optional.ofNullable(clients.get(id));
     }
 
@@ -38,7 +38,7 @@ public class ClientRepositoryMemory implements ClientRepository {
 
     @Override
     public void delete(String id) {
-        getClient(id).orElseThrow(() -> {
+        findClient(id).orElseThrow(() -> {
             return new IllegalArgumentException(String.format("Client with id: '%s' not found.", id));
         });
 
