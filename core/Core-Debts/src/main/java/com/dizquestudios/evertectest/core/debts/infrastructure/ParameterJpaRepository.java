@@ -2,6 +2,10 @@ package com.dizquestudios.evertectest.core.debts.infrastructure;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.json.JSONObject;
 import org.springframework.stereotype.Repository;
@@ -10,10 +14,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.dizquestudios.evertectest.core.debts.domain.Parameter;
 import com.dizquestudios.evertectest.core.debts.domain.ParameterRepository;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 /**
  *
