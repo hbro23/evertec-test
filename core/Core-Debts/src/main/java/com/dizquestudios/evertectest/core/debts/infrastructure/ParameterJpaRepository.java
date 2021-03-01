@@ -23,6 +23,8 @@ import com.dizquestudios.evertectest.core.debts.domain.ParameterRepository;
 public class ParameterJpaRepository implements ParameterRepository {
 
     public static final String ENTITY_FIELD = "entity";
+    public static final String PATTERN_VALIDATION_FIELD = "pattern-validation";
+    public static final String PATTERN_FIELD = "pattern";
 
     private final ParametroCrudRepository crudRepository;
     private final ObjectMapper mapper;
@@ -80,6 +82,9 @@ public class ParameterJpaRepository implements ParameterRepository {
         try {
             String value = mapper.writeValueAsString(parameter);
             JSONObject json = new JSONObject(value);
+            json.put(PATTERN_VALIDATION_FIELD,
+                    json.getJSONObject(PATTERN_VALIDATION_FIELD)
+                            .getString(PATTERN_FIELD));
             json.remove(ENTITY_FIELD);
             newParametro.setValor(json.toString());
 

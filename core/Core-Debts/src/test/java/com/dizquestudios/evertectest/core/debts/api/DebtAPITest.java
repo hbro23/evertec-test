@@ -1,24 +1,27 @@
 package com.dizquestudios.evertectest.core.debts.api;
 
-import com.dizquestudios.evertectest.core.debts.domain.ClientRepository;
-import com.dizquestudios.evertectest.core.debts.domain.Debt;
-import com.dizquestudios.evertectest.core.debts.domain.DebtRepository;
-import com.dizquestudios.evertectest.core.debts.domain.Parameter;
-import com.dizquestudios.evertectest.core.debts.domain.ParameterRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
-import org.javamoney.moneta.FastMoney;
-import org.junit.jupiter.api.DisplayName;
+
 import org.junit.jupiter.api.Test;
-import static org.mockito.Mockito.atLeastOnce;
+import org.javamoney.moneta.FastMoney;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import org.junit.jupiter.api.DisplayName;
+import static org.mockito.Mockito.atLeastOnce;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import com.dizquestudios.evertectest.core.debts.domain.ClientRepository;
+import com.dizquestudios.evertectest.core.debts.domain.Debt;
+import com.dizquestudios.evertectest.core.debts.domain.DebtRepository;
+import com.dizquestudios.evertectest.core.debts.domain.Parameter;
+import com.dizquestudios.evertectest.core.debts.domain.ParameterRepository;
+import static com.dizquestudios.evertectest.core.debts.domain.Debt.CURRENCY;
 
 /**
  *
@@ -54,25 +57,25 @@ public class DebtAPITest {
 
         Debt debt = new Debt();
         debt.setId("1037DEUDA2020");
-        debt.setAmount(FastMoney.of(1000000, DebtAPI.CURRENCY));
+        debt.setAmount(FastMoney.of(1000000, CURRENCY));
         debt.setExpiryDate(LocalDate.parse(Debt.parserExpiryDate("01-03-2021")));
         debt.setClient("1037617767SCO");
 
         Debt debt2 = new Debt();
         debt2.setId("1037DEUDA2021");
-        debt2.setAmount(FastMoney.of(5000000, DebtAPI.CURRENCY));
+        debt2.setAmount(FastMoney.of(5000000, CURRENCY));
         debt2.setExpiryDate(LocalDate.parse(Debt.parserExpiryDate("31-08-2021")));
         debt2.setClient("1037617767SCO");
 
         Debt debt3 = new Debt();
         debt3.setId("7676DEUDA2021");
-        debt3.setAmount(FastMoney.of(5000000, DebtAPI.CURRENCY));
+        debt3.setAmount(FastMoney.of(5000000, CURRENCY));
         debt3.setExpiryDate(LocalDate.parse(Debt.parserExpiryDate("31-03-2021")));
         debt3.setClient("7676171037OCS");
 
         Debt debt4 = new Debt();
         debt4.setId("1037NODEUDA2020");
-        debt4.setAmount(FastMoney.of(800000, DebtAPI.CURRENCY));
+        debt4.setAmount(FastMoney.of(800000, CURRENCY));
         debt4.setExpiryDate(LocalDate.parse(Debt.parserExpiryDate("01-04-2021")));
         debt4.setClient("1037620830SZA");
 

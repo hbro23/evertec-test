@@ -6,30 +6,30 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
+import java.math.BigDecimal;
+import java.util.stream.Stream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.function.Function;
 
 import org.json.JSONObject;
 import org.javamoney.moneta.FastMoney;
 import org.zalando.jackson.datatype.money.MoneyModule;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import com.dizquestudios.evertectest.core.debts.domain.Client;
-import static com.dizquestudios.evertectest.core.debts.domain.Client.ID_FIELD;
 import com.dizquestudios.evertectest.core.debts.domain.Debt;
-import static com.dizquestudios.evertectest.core.debts.domain.Debt.AMOUNT_FIELD;
-import static com.dizquestudios.evertectest.core.debts.domain.Debt.CLIENT_FIELD;
-import static com.dizquestudios.evertectest.core.debts.domain.Debt.EXPIRY_DATE_FIELD;
 import com.dizquestudios.evertectest.core.debts.domain.DebtRepository;
 import com.dizquestudios.evertectest.core.debts.domain.Parameter;
 import com.dizquestudios.evertectest.core.debts.shared.API;
 import com.dizquestudios.evertectest.core.debts.shared.StringChecker;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import java.math.BigDecimal;
+import static com.dizquestudios.evertectest.core.debts.domain.Client.ID_FIELD;
+import static com.dizquestudios.evertectest.core.debts.domain.Debt.AMOUNT_FIELD;
+import static com.dizquestudios.evertectest.core.debts.domain.Debt.CLIENT_FIELD;
+import static com.dizquestudios.evertectest.core.debts.domain.Debt.CURRENCY;
 
 /**
  *
@@ -38,7 +38,6 @@ import java.math.BigDecimal;
 @API
 public class DebtAPI {
 
-    public final static String CURRENCY = "CLP";
     private final static String CURRENCY_FIELD = "currency";
 
     record ClientAndDebt(Client client, Debt debt) {
@@ -54,6 +53,27 @@ public class DebtAPI {
                 .registerModule(new MoneyModule()
                         .withMonetaryAmount(FastMoney::of));
         this.mapper.registerModule(new JavaTimeModule());
+    }
+
+    public List<Debt> findAll(ClientAPI clientAPI) {
+        return repository.findAll(clientAPI.getRepository());
+    }
+
+    public void loadDebsFromFile(File debts, ParameterAPI parameterAPI,
+            ClientAPI clientAPI) throws IOException {
+        List<Parameter> parameters = parameterAPI.findAll();
+        List<ClientAndDebt> validatedDebts = extractClientsAndDebts(
+                Files.lines(debts.toPath()).parallel(), parameters);
+
+        List<Client> clients = validatedDebts.parallelStream()
+                .map(ClientAndDebt::client).distinct().collect(Collectors.toList());
+
+        clientAPI.saveList(clients);
+
+        List<Debt> newDebts = validatedDebts.parallelStream()
+                .map(ClientAndDebt::debt).collect(Collectors.toList());
+
+        repository.saveList(newDebts, clientAPI.getRepository());
     }
 
     private List<ClientAndDebt> extractClientsAndDebts(Stream<String> lines,
@@ -103,6 +123,7 @@ public class DebtAPI {
                 newDebt = mapper.readValue(dataDebt.toString(), Debt.class);
                 client = mapper.readValue(dataClient.toString(), Client.class);
             } catch (JsonProcessingException ex) {
+                System.out.println("d" + dataDebt.toString());
                 Logger.getLogger(DebtAPI.class.getName()).log(Level.SEVERE, null, ex);
                 throw new IllegalArgumentException(String.format(
                         "Parse error. Exception: %s", ex.getMessage()), ex);
@@ -112,22 +133,5 @@ public class DebtAPI {
         };
 
         return lines.map(lineToDebts).collect(Collectors.toList());
-    }
-
-    public void loadDebsFromFile(File debts, ParameterAPI parameterAPI,
-            ClientAPI clientAPI) throws IOException {
-        List<Parameter> parameters = parameterAPI.findAll();
-        List<ClientAndDebt> validatedDebts = extractClientsAndDebts(
-                Files.lines(debts.toPath()).parallel(), parameters);
-
-        List<Client> clients = validatedDebts.parallelStream()
-                .map(ClientAndDebt::client).distinct().collect(Collectors.toList());
-
-        clientAPI.saveList(clients);
-
-        List<Debt> newDebts = validatedDebts.parallelStream()
-                .map(ClientAndDebt::debt).collect(Collectors.toList());
-
-        repository.saveList(newDebts, clientAPI.getRepository());
     }
 }

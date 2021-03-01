@@ -76,8 +76,7 @@ public final class ParameterAPITest {
                       			"max-length": 10
                       		},
                       		"pattern-validation": "^.{1,10}$"
-                      	}
-                      ]
+                      	}]
                       """;
 
     @Test

@@ -16,7 +16,7 @@ import java.util.Objects;
  * @author Sebastian
  */
 public class Debt {
-
+    
     @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
             public record DebtAmount(FastMoney amount) {
 
@@ -24,8 +24,8 @@ public class Debt {
             MoneyChecker.checkGreaterZero(amount);
         }
     }
-
-    public static String EXPIRY_DATE_FIELD = "expiry-date";
+    
+    public final static String CURRENCY = "CLP";
     public static String CLIENT_FIELD = "client";
     public static String AMOUNT_FIELD = "amount";
 
@@ -35,7 +35,8 @@ public class Debt {
 
     private String id;
     private String client;
-
+    
+    
     private FastMoney amount;
 
     @JsonProperty("expiry-date")

@@ -1,6 +1,5 @@
 package com.dizquestudios.evertectest.core.debts.infrastructure;
 
-import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +12,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "parametros")
-public class Parametro implements Serializable {
+public class Parametro {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

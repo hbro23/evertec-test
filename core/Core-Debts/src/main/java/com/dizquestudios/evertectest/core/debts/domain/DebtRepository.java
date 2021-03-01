@@ -9,4 +9,6 @@ import java.util.List;
 public interface DebtRepository {
 
     void saveList(List<Debt> debts, ClientRepository clientRepository);
+
+    List<Debt> findAll(ClientRepository clientRepository);
 }

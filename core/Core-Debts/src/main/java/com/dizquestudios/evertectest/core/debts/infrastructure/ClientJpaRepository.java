@@ -2,10 +2,10 @@ package com.dizquestudios.evertectest.core.debts.infrastructure;
 
 import com.dizquestudios.evertectest.core.debts.domain.Client;
 import com.dizquestudios.evertectest.core.debts.domain.ClientRepository;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import org.springframework.stereotype.Repository;
@@ -17,7 +17,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ClientJpaRepository implements ClientRepository {
 
-    private static final Map<String, Integer> cachePKs = new HashMap<>();
+    private static final ConcurrentMap<String, Integer> cachePKs = new ConcurrentHashMap<>();
+    private static final ConcurrentMap<Integer, String> cacheIDs = new ConcurrentHashMap<>();
 
     private final ClienteCrudRepository crudRepository;
 
@@ -65,6 +66,19 @@ public class ClientJpaRepository implements ClientRepository {
         }));
     }
 
+    Optional<String> findId(Cliente cliente) {
+        return findId(cliente.getPk());
+    }
+
+    Optional<String> findId(Integer pk) {
+
+        return Optional.ofNullable(cacheIDs.computeIfAbsent(pk, (key) -> {
+            return crudRepository.findById(key).map((cliente) -> {
+                return cliente.getId();
+            }).orElse(null);
+        }));
+    }
+
     private Client toClient(Cliente cliente) {
         Client newClient = new Client();
         newClient.setId(cliente.getId());
@@ -72,6 +86,7 @@ public class ClientJpaRepository implements ClientRepository {
         newClient.setMail(new Client.ClientMail(cliente.getCorreo()));
 
         cachePKs.put(cliente.getId(), cliente.getPk());
+        cacheIDs.put(cliente.getPk(), cliente.getId());
 
         return newClient;
     }
@@ -86,10 +101,13 @@ public class ClientJpaRepository implements ClientRepository {
         Cliente newCliente = new Cliente();
         newCliente.setNombre(client.getName());
         newCliente.setId(client.getId());
+        newCliente.setCorreo(client.getMail().mail());
 
-        Integer pk = findPk(client).get();
-        newCliente.setPk(pk);
-        cachePKs.put(client.getId(), pk);
+        findPk(client).ifPresent((pk) -> {
+            newCliente.setPk(pk);
+            cachePKs.put(client.getId(), pk);
+            cacheIDs.put(pk, client.getId());
+        });
 
         return newCliente;
     }

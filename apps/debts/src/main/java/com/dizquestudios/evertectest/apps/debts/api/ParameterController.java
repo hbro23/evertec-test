@@ -41,5 +41,4 @@ public class ParameterController {
 
         return new ResponseEntity<>(api.findAll(), HttpStatus.OK);
     }
-
 }
