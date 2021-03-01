@@ -1,8 +1,10 @@
 package com.dizquestudios.evertectest.core.debts.infrastructure;
 
 import java.util.List;
+import java.util.Optional;
 import java.math.BigDecimal;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.javamoney.moneta.FastMoney;
 import org.springframework.stereotype.Repository;
@@ -11,7 +13,6 @@ import com.dizquestudios.evertectest.core.debts.domain.Debt;
 import com.dizquestudios.evertectest.core.debts.domain.DebtRepository;
 import com.dizquestudios.evertectest.core.debts.domain.ClientRepository;
 import static com.dizquestudios.evertectest.core.debts.domain.Debt.CURRENCY;
-import java.util.stream.StreamSupport;
 
 /**
  *
@@ -31,6 +32,15 @@ public class DebtJpaRepository implements DebtRepository {
         ClientJpaRepository clientJpaRepository = (ClientJpaRepository) clientRepository;
 
         return toDebtList(crudRepository.findAll(), clientJpaRepository);
+    }
+
+    @Override
+    public Optional<Debt> findDebt(String id, ClientRepository clientRepository) {
+        ClientJpaRepository clientJpaRepository = (ClientJpaRepository) clientRepository;
+
+        return crudRepository.findById(id).map((deuda) -> {
+            return toDebt(deuda, clientJpaRepository);
+        });
     }
 
     @Override

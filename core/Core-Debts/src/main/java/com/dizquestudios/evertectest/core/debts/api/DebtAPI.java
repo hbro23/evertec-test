@@ -30,6 +30,7 @@ import static com.dizquestudios.evertectest.core.debts.domain.Client.ID_FIELD;
 import static com.dizquestudios.evertectest.core.debts.domain.Debt.AMOUNT_FIELD;
 import static com.dizquestudios.evertectest.core.debts.domain.Debt.CLIENT_FIELD;
 import static com.dizquestudios.evertectest.core.debts.domain.Debt.CURRENCY;
+import java.util.Optional;
 
 /**
  *
@@ -57,6 +58,10 @@ public class DebtAPI {
 
     public List<Debt> findAll(ClientAPI clientAPI) {
         return repository.findAll(clientAPI.getRepository());
+    }
+
+    public Optional<Debt> findDebt(String id, ClientAPI clientAPI) {
+        return repository.findDebt(id, clientAPI.getRepository());
     }
 
     public void loadDebsFromFile(File debts, ParameterAPI parameterAPI,
@@ -118,7 +123,7 @@ public class DebtAPI {
             debtAmount.put(CURRENCY_FIELD, CURRENCY);
             debtAmount.put(AMOUNT_FIELD, new BigDecimal(dataDebt.getString(AMOUNT_FIELD)));
             dataDebt.put(AMOUNT_FIELD, debtAmount);
-            
+
             try {
                 newDebt = mapper.readValue(dataDebt.toString(), Debt.class);
                 client = mapper.readValue(dataClient.toString(), Client.class);
