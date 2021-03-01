@@ -1,21 +1,22 @@
 package com.dizquestudios.evertectest.apps.debts;
 
-import com.dizquestudios.evertectest.core.debts.domain.Debt;
+import javax.money.Monetary;
+
+import org.javamoney.moneta.FastMoney;
 import org.springframework.boot.SpringApplication;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Bean;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.context.annotation.Primary;
+import org.zalando.jackson.datatype.money.MoneyModule;
 import org.springframework.context.annotation.FilterType;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import com.dizquestudios.evertectest.core.debts.domain.Debt;
 import com.dizquestudios.evertectest.core.debts.shared.API;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import javax.money.Monetary;
-import org.javamoney.moneta.FastMoney;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
-import org.zalando.jackson.datatype.money.MoneyModule;
 
 @SpringBootApplication
 @ComponentScan(

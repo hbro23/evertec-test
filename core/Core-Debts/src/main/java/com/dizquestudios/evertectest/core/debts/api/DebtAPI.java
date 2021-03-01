@@ -123,7 +123,7 @@ public class DebtAPI {
                 newDebt = mapper.readValue(dataDebt.toString(), Debt.class);
                 client = mapper.readValue(dataClient.toString(), Client.class);
             } catch (JsonProcessingException ex) {
-                System.out.println("d" + dataDebt.toString());
+//                System.out.println("d" + dataDebt.toString());
                 Logger.getLogger(DebtAPI.class.getName()).log(Level.SEVERE, null, ex);
                 throw new IllegalArgumentException(String.format(
                         "Parse error. Exception: %s", ex.getMessage()), ex);

@@ -12,5 +12,6 @@
     <modules>
         <module>apps/debts</module>
         <module>core/Core-Debts</module>
+        <module>apps/debtscli</module>
     </modules>
 </project>

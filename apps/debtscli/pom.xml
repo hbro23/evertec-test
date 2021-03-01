@@ -9,28 +9,21 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.dizquestudios.evertectest.apps</groupId>
-    <artifactId>debts</artifactId>
+    <artifactId>debtscli</artifactId>
     <version>0.0.1</version>
-    <packaging>war</packaging>
-    <name>Debts</name>
-    <description>Demo of managing client account debts.</description>
+    <name>Debts CLI</name>
+    <description>Demo of managing client account debts from CLI.</description>
     <properties>
         <java.version>15</java.version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>provided</scope>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -44,15 +37,8 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.javamoney</groupId>
-            <artifactId>moneta</artifactId>
-            <version>1.4.2</version>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>org.zalando</groupId>
-            <artifactId>jackson-datatype-money</artifactId>
-            <version>1.2.1</version>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
         <dependency>
             <groupId>com.dizquestudios.evertectest</groupId>
@@ -60,7 +46,7 @@
             <version>0.0.1</version>
         </dependency>
     </dependencies>
-    
+
     <build>
         <finalName>${project.artifactId}##${project.version}</finalName>
         <plugins>
