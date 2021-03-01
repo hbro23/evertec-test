@@ -10,10 +10,13 @@ import java.util.Optional;
 public interface ClientRepository {
 
     public List<Client> findAll();
-    
+
     public Optional<Client> findClient(String id);
-    
+
+    public List<Client> findById(List<Client> clients);
+
     void save(Client client);
 
-    void delete(String id);
+    void saveList(List<Client> clients);
+
 }

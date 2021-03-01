@@ -11,6 +11,24 @@ import java.util.regex.PatternSyntaxException;
  */
 public class StringChecker extends ValueObjectChecker {
 
+    public static String ifNull(String value, String defaultValue) {
+        if (defaultValue == null) {
+            return defaultValue;
+        }
+
+        return value;
+    }
+
+    public static String ifEmpty(String value, String defaultValue) {
+        value = ifNull(value, "");
+
+        if (value.isEmpty()) {
+            return defaultValue;
+        }
+
+        return value;
+    }
+
     public static void checkNull(String value) {
         ValueObjectChecker.checkNull(value, "String value is null.");
     }
@@ -39,7 +57,7 @@ public class StringChecker extends ValueObjectChecker {
 
         if (!Pattern.matches(pattern, candidate)) {
             throw new IllegalArgumentException(
-                    String.format("Value doesn't match. Value: %s | Pattern: %s",
+                    String.format("Value doesn't match. Pattern: '%s' | Value: '%s' |",
                             pattern, candidate));
         }
     }

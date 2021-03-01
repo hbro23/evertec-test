@@ -22,7 +22,6 @@ public class ParameterJpaRepositoryTest {
         Parameter parameter = new Parameter();
         parameter.setEntity("some-entity");
         parameter.setColumn(new Parameter.ParameterColumn("some-id", 1, 10));
-        parameter.setPatternValidation("");
 
         repository.save(parameter);
     }

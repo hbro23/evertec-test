@@ -21,5 +21,12 @@ public class ClientAPI {
     public List<Client> findAll() {
         return repository.findAll();
     }
+    
+    public void saveList(List<Client> clients){
+        repository.saveList(clients);
+    }
 
+    public ClientRepository getRepository() {
+        return repository;
+    }
 }

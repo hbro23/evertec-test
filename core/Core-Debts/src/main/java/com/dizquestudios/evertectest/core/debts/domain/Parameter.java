@@ -27,9 +27,12 @@ public class Parameter {
     }
 
     @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-            public record ParameterPattern(String pattern) {
+    public record ParameterPattern(String pattern) {
+
+        public static final String DEFAULT_PATTERN = ".+";
 
         public ParameterPattern {
+            pattern = StringChecker.ifEmpty(pattern, DEFAULT_PATTERN);
             StringChecker.checkRegexPattern(pattern);
         }
 
@@ -39,14 +42,14 @@ public class Parameter {
     private ParameterColumn column;
 
     @JsonProperty("pattern-validation")
-    private String patternValidation;
+    private ParameterPattern patternValidation;
 
     /**
      * Get the value of patternValidation
      *
      * @return the value of patternValidation
      */
-    public String getPatternValidation() {
+    public ParameterPattern getPatternValidation() {
         return patternValidation;
     }
 
@@ -55,7 +58,7 @@ public class Parameter {
      *
      * @param patternValidation new value of patternValidation
      */
-    public void setPatternValidation(String patternValidation) {
+    public void setPatternValidation(ParameterPattern patternValidation) {
         this.patternValidation = patternValidation;
     }
 
