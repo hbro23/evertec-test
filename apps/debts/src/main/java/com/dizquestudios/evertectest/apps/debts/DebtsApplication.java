@@ -21,7 +21,8 @@ import com.dizquestudios.evertectest.core.debts.shared.API;
 @SpringBootApplication
 @ComponentScan(
         includeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = API.class),
-        value = {"com.dizquestudios.evertectest.core.debts", "com.dizquestudios.evertectest.apps.debts.api"})
+        value = {"com.dizquestudios.evertectest.core.debts", "com.dizquestudios.evertectest.apps.debts.api",
+        "com.dizquestudios.evertectest.apps.debts.config"})
 @EnableJpaRepositories("com.dizquestudios.evertectest.core.debts.infrastructure")
 @EntityScan("com.dizquestudios.evertectest.core.debts.infrastructure")
 public class DebtsApplication {

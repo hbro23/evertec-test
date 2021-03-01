@@ -15,6 +15,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.dizquestudios.evertectest.core.debts.api.ParameterAPI;
 import com.dizquestudios.evertectest.core.debts.domain.Parameter;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.Example;
+import io.swagger.annotations.ExampleProperty;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
  *
@@ -23,14 +32,19 @@ import com.dizquestudios.evertectest.core.debts.domain.Parameter;
 @RestController
 @RequestMapping("/parameters")
 public class ParameterController {
-
+    
     private final ParameterAPI api;
 
     public ParameterController(ParameterAPI api) {
         this.api = api;
     }
 
-    @PostMapping(value = "/of/file", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/of/file", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation("Save all parameters for checking columns on load process.")
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "OK"),
+        @ApiResponse(code = 400, message = "Invalid parameter in file.")})
     public ResponseEntity<List<Parameter>> saveFromFile(
             @RequestPart("file") MultipartFile file) throws IOException {
 

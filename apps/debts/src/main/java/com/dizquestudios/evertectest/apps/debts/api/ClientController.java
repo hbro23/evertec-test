@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dizquestudios.evertectest.core.debts.domain.Client;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import org.springframework.http.MediaType;
 
 /**
  *
@@ -25,7 +28,9 @@ public class ClientController {
         this.api = api;
     }
 
-    @GetMapping("")
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation("List all clients.")
+    @ApiResponse(code = 200, message = "OK")
     public ResponseEntity<List<Client>> getAll() {
         return new ResponseEntity<>(api.findAll(), HttpStatus.OK);
     }

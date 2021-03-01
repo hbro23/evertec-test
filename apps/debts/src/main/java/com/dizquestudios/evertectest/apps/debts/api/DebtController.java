@@ -4,6 +4,9 @@ import com.dizquestudios.evertectest.core.debts.api.ClientAPI;
 import com.dizquestudios.evertectest.core.debts.api.DebtAPI;
 import com.dizquestudios.evertectest.core.debts.api.ParameterAPI;
 import com.dizquestudios.evertectest.core.debts.domain.Debt;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -34,7 +37,12 @@ public class DebtController {
         this.clientAPI = clientAPI;
     }
 
-    @PostMapping(value = "/of/file", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/of/file", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation("Save all debts and clients (if it's neccesary) from csv.")
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "OK"),
+        @ApiResponse(code = 400, message = "Invalid debt in file.")})
     public ResponseEntity<List<Debt>> saveFromFile(
             @RequestPart("file") MultipartFile file) throws IOException {
 
