@@ -31,7 +31,7 @@ public class Commander implements CommandLineRunner {
 
     public static final String HELP_ARG = "-h";
     public static final String PARAMETERS_ARG = "-p";
-    public static final String DEBTS_ARG = "-b";
+    public static final String DEBTS_ARG = "-d";
 
     private static Logger logger() {
         return Logger.getLogger(Commander.class.getSimpleName());
